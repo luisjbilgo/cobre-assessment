@@ -1,0 +1,4 @@
+amount_bracket,txn_count,failure_rate,avg_amount
+<$5k,9908,18.68,2845.42
+$5k-$10k,4409,13.7,7466.36
+>$10k,3090,23.37,21182.99

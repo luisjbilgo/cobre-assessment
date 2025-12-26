@@ -1,0 +1,4 @@
+user_segment,unique_users,total_transactions,avg_txns_per_user,avg_amount,failure_rate
+retail,4971,24864,5.0,2037.57,9.99
+sme,4873,17605,3.61,5473.75,8.05
+enterprise,3901,7531,1.93,17851.65,11.66

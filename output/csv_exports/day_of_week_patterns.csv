@@ -1,0 +1,8 @@
+day_of_week,day_num,txn_count,failure_rate,avg_amount
+Sunday,0,7199,9.28,5675.04
+Monday,1,7110,9.8,5702.15
+Tuesday,2,7337,9.68,5613.76
+Wednesday,3,7190,9.32,5530.54
+Thursday,4,6998,9.57,5597.34
+Friday,5,7126,9.61,5637.52
+Saturday,6,7040,9.67,5649.95

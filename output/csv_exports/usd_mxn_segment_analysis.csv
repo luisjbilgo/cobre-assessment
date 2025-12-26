@@ -1,0 +1,4 @@
+user_segment,txn_count,failure_rate,avg_amount,total_value
+enterprise,2653,23.9,22983.28,60974650.77
+retail,8550,19.5,2623.11,22427630.95
+sme,6204,14.12,6957.58,43164809.3

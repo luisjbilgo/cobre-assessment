@@ -1,0 +1,24 @@
+COBRE PAYMENT CORRIDOR ANALYSIS - DATA VALIDATION SUMMARY
+================================================================================
+
+Table: transactions
+File: ../data/raw/transactions.csv
+Records: 50,000
+Columns: 10
+Null Values: 0
+Duplicates: 0
+Date Range: 2025-07-01 to 2025-12-30
+Status: PASS
+--------------------------------------------------------------------------------
+
+Table: users
+File: ../data/raw/users.csv
+Records: 5,000
+Columns: 5
+Null Values: 0
+Duplicates: 0
+Date Range: 2023-07-03 to 2025-01-02
+Status: PASS
+--------------------------------------------------------------------------------
+
+Validation Complete
