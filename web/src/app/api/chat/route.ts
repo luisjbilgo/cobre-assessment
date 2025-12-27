@@ -4,6 +4,7 @@ import { SqlDatabase } from '@langchain/classic/sql_db';
 import { ChatOpenAI } from '@langchain/openai';
 import { createSqlAgent, SqlToolkit } from '@langchain/classic/agents/toolkits/sql';
 import path from 'path';
+import fs from 'fs';
 
 export const runtime = 'nodejs'; // Force Node.js runtime for sqlite3
 
@@ -15,11 +16,21 @@ async function getDataSource() {
     return datasource;
   }
 
-  const dbPath = path.join(process.cwd(), 'public', 'assessment.db');
+  // Path to the database in the build (read-only in Vercel)
+  const sourcePath = path.join(process.cwd(), 'public', 'assessment.db');
+  
+  // Path to /tmp (writable in Vercel serverless)
+  const tmpPath = path.join('/tmp', 'assessment.db');
+
+  // Copy database to /tmp if it doesn't exist
+  if (!fs.existsSync(tmpPath)) {
+    console.log('Copying database from', sourcePath, 'to', tmpPath);
+    fs.copyFileSync(sourcePath, tmpPath);
+  }
 
   datasource = new DataSource({
     type: 'sqlite',
-    database: dbPath,
+    database: tmpPath, // Use /tmp instead of /public
   });
 
   await datasource.initialize();
@@ -72,6 +83,11 @@ export async function POST(req: NextRequest) {
 
   } catch (error: any) {
     console.error('Chat API Error:', error);
+    console.error('Error details:', {
+      message: error.message,
+      code: error.code,
+      stack: error.stack
+    });
     return NextResponse.json({ error: error.message || 'Internal Server Error' }, { status: 500 });
   }
 }
