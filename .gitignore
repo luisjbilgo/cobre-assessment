@@ -29,6 +29,8 @@ ENV/
 data/processed/
 *.db
 *.sqlite
+# Exception: Include the web database for Vercel deployment
+!web/public/assessment.db
 
 # OS
 .DS_Store
