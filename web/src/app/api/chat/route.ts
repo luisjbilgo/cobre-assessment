@@ -16,15 +16,42 @@ async function getDataSource() {
     return datasource;
   }
 
-  // Path to the database in the build (read-only in Vercel)
-  const sourcePath = path.join(process.cwd(), 'public', 'assessment.db');
-  
   // Path to /tmp (writable in Vercel serverless)
   const tmpPath = path.join('/tmp', 'assessment.db');
 
   // Copy database to /tmp if it doesn't exist
   if (!fs.existsSync(tmpPath)) {
-    console.log('Copying database from', sourcePath, 'to', tmpPath);
+    // Try multiple possible source paths (depends on Vercel config)
+    const possiblePaths = [
+      path.join(process.cwd(), 'public', 'assessment.db'),
+      path.join(process.cwd(), '..', 'public', 'assessment.db'),
+      path.join('/var/task', 'public', 'assessment.db'),
+      path.join('/var/task', 'web', 'public', 'assessment.db'),
+    ];
+
+    console.log('Looking for database in possible locations...');
+    console.log('process.cwd():', process.cwd());
+    
+    let sourcePath: string | null = null;
+    for (const p of possiblePaths) {
+      console.log('Checking:', p, '- exists:', fs.existsSync(p));
+      if (fs.existsSync(p)) {
+        sourcePath = p;
+        break;
+      }
+    }
+
+    if (!sourcePath) {
+      // List contents of cwd to debug
+      console.log('Contents of process.cwd():', fs.readdirSync(process.cwd()));
+      if (fs.existsSync(path.join(process.cwd(), 'public'))) {
+        console.log('Contents of public dir:', fs.readdirSync(path.join(process.cwd(), 'public')));
+      }
+      throw new Error(`Database file not found in any expected location. Checked: ${possiblePaths.join(', ')}`);
+    }
+
+    console.log('Found database at:', sourcePath);
+    console.log('Copying database to:', tmpPath);
     fs.copyFileSync(sourcePath, tmpPath);
   }
 
