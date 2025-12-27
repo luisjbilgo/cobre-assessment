@@ -20,6 +20,7 @@ interface CorridorMetric {
   failure_rate: number;
   avg_amount: number;
   revenue_usd: number;
+  [key: string]: any;
 }
 
 interface SegmentMetric {
@@ -27,6 +28,7 @@ interface SegmentMetric {
   failure_rate: number;
   avg_amount: number;
   total_transactions: number;
+  [key: string]: any;
 }
 
 interface TrendMetric {
@@ -35,6 +37,7 @@ interface TrendMetric {
   failure_rate: number;
   successful: number;
   failed: number;
+  [key: string]: any;
 }
 
 interface AmountMetric {
@@ -42,6 +45,7 @@ interface AmountMetric {
   txn_count: number;
   failure_rate: number;
   avg_amount: number;
+  [key: string]: any;
 }
 
 export default function DashboardPage() {
